@@ -1,12 +1,11 @@
 // src/components/ArcadeIntro.tsx
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, color } from 'framer-motion';
 
 // --- UPDATE THIS PATH ---
 // Place your yellowish arcade image in the `public` folder
 // and update the path here.
-const arcadeMachineImage = '/arcade.png';
 
 // --- Arrow SVG ---
 // A simple down-arrow to point at the joystick
@@ -15,7 +14,7 @@ const ArrowIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
-    className="w-12 h-12 text-yellow-300 drop-shadow-lg"
+    className="w-18 h-17 text-gray-200 drop-shadow-lg"
   >
     <path
       fillRule="evenodd"
@@ -38,7 +37,7 @@ const sentence = {
     opacity: 1,
     transition: {
       delay: 0.5,
-      staggerChildren: 0.15, // Time between each letter appearing (typing speed)
+      staggerChildren: 0.3, // Time between each letter appearing (typing speed)
     },
   },
 };
@@ -81,9 +80,9 @@ export const ArcadeIntro = ({ onIntroComplete }: ArcadeIntroProps) => {
           className="relative w-full h-screen flex items-center justify-center overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          exit={{ opacity: 0, transition: { duration: 1 } }}
           style={{
-            backgroundImage: 'url(/background.jpg)',
+            backgroundImage: 'url(/background.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -98,7 +97,7 @@ export const ArcadeIntro = ({ onIntroComplete }: ArcadeIntroProps) => {
             // This is CRUCIAL: it sets the *origin* of the zoom.
             // You MUST adjust "50% 38%" to be the center of your arcade screen.
             style={{ transformOrigin: '50% 38%' }}
-            transition={{ duration: 0.8, ease: 'easeIn' }}
+            transition={{ duration: 3, ease: 'easeIn' }}
             onAnimationComplete={() => {
               // When the zoom animation is done, call the prop
               if (isZooming) {
@@ -109,9 +108,9 @@ export const ArcadeIntro = ({ onIntroComplete }: ArcadeIntroProps) => {
             {/* 1. The Arcade Machine Image */}
             {/* We fade this out as we zoom */}
             <motion.img
-              src={arcadeMachineImage}
+              src='/arcade.png'
               alt="Arcade machine"
-              className="w-full max-w-md lg:max-w-lg h-auto"
+              className="w-screen h-screen overflow-hidden"
               animate={{ opacity: isClicked ? 0 : 1 }}
               transition={{ duration: 0.3 }}
             />
@@ -122,8 +121,8 @@ export const ArcadeIntro = ({ onIntroComplete }: ArcadeIntroProps) => {
               className="absolute flex flex-col items-start justify-center gap-1"
               // !!! YOU MUST TWEAK THESE VALUES !!!
               style={{
-                top: '27%',
-                left: '50%',
+                top: '49%',
+                left: '65%',
                 transform: 'translateX(-50%)',
                 width: '45%',
               }}
@@ -133,11 +132,12 @@ export const ArcadeIntro = ({ onIntroComplete }: ArcadeIntroProps) => {
               {lines.map((line, lineIndex) => (
                 <motion.div
                   key={lineIndex}
-                  className="font-pixel text-xl md:text-2xl lg:text-3xl text-yellow-300 uppercase w-full text-left"
+                  className="font-pixel text-2xl md:text-2xl lg:text-4xl uppercase w-full text-left font-bold
+                  "
                   // Glowing text effect
                   style={{
-                    textShadow: '0 0 8px #fde047, 0 0 12px #fde047',
-                    letterSpacing: '0.05em',
+                    color: "white",
+                    letterSpacing: '0.2em',
                   }}
                   variants={sentence}
                   initial="hidden"
@@ -163,8 +163,8 @@ export const ArcadeIntro = ({ onIntroComplete }: ArcadeIntroProps) => {
               // !!! YOU MUST TWEAK THESE VALUES !!!
               // Position this right above the joystick
               style={{
-                top: '48%',
-                left: '50%',
+                top: '56%',
+                left: '53%',
                 transform: 'translateX(-50%)',
               }}
               // Bouncing animation
@@ -185,8 +185,8 @@ export const ArcadeIntro = ({ onIntroComplete }: ArcadeIntroProps) => {
               // !!! YOU MUST TWEAK THESE VALUES !!!
               // Position this perfectly over the joystick
               style={{
-                top: '53%',
-                left: '50%',
+                top: '58%',
+                left: '53%',
                 transform: 'translateX(-50%)',
               }}
               onClick={handleJoystickClick}
